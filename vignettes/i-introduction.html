@@ -104,7 +104,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#simulation-experiments"><span class="toc-section-number">5</span> Simulation experiments</a><ul>
 <li><a href="#running-a-groups-of-simulations-the-experiment-function"><span class="toc-section-number">5.1</span> Running a groups of simulations: the <code>experiment</code> function</a></li>
 </ul></li>
-<li><a href="#additional-resources"><span class="toc-section-number">6</span> Additional resources</a><ul>
+<li><a href="#additonal-resources"><span class="toc-section-number">6</span> Additonal resources</a><ul>
 <li><a href="#spades-documentation-and-vignettes"><span class="toc-section-number">6.1</span> <code>SpaDES</code> documentation and vignettes</a><ul>
 <li><a href="#help-files"><span class="toc-section-number">6.1.1</span> Help files</a></li>
 <li><a href="#vignettes"><span class="toc-section-number">6.1.2</span> Vignettes</a></li>
@@ -184,7 +184,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="simulation-and-data" class="section level1">
 <h1><span class="header-section-number">2</span> Simulation and data</h1>
 <p>Historically, simulation models were built separately from the analysis of input data (<em>e.g.</em>, via regression) and outputs of data (<em>e.g.</em>, graphically, statistically). On the input data side, this effectively broke the linkage between data (<em>e.g.</em>, from field or satellites) and the simulation. This has the undesired effect of creating the appearance of reduced uncertainty in simulation model predictions, by breaking correlations between parameter estimates (that invariably occur in analyses of real data), or simply by passing an incorrectly specified parameter uncertainty to a simulation model.</p>
-<p>Conversely, on the data output side, numerous tools, such as optimization <span class="citation">(<em>e.g.</em>, pattern oriented modeling Grimm et al. 2005)</span> or statistical analyses could not directly interact with the simulation model, unless a specific extension was built for that purpose. In <code>R</code>, those tools already exist and are robust. Thus, validation, calibration, and verification of simulation models can become rolled into the simulation model itself, facilitating understanding of models’ forecasting performance and thus their predictive capacity. All of these enhance transparency and reproducibility, both desired properties for scientific studies.</p>
+<p>Conversely, on the data output side, numerous tools, such as optimization (<em>e.g.</em>, pattern oriented modeling <span class="citation">Grimm et al. (2005)</span>) or statistical analyses could not directly interact with the simulation model, unless a specific extension was built for that purpose. In <code>R</code>, those tools already exist and are robust. Thus, validation, calibration, and verification of simulation models can become rolled into the simulation model itself, facilitating understanding of models’ forecasting performance and thus their predictive capacity. All of these enhance transparency and reproducibility, both desired properties for scientific studies.</p>
 <p>Linking the raw data, data analysis, validation, calibration (via optimization), simulation forecasting, and output analyses into a single work flow allow for several powerful outcomes:</p>
 <ol style="list-style-type: decimal">
 <li>updates to raw data can be easily propagated into the outputs;</li>
@@ -221,7 +221,7 @@ mySim
 </div>
 <div id="running-a-simulation-the-spades-function" class="section level2">
 <h2><span class="header-section-number">3.2</span> Running a simulation: the <code>spades</code> function</h2>
-<p>Once a simulation is properly initialized it is executed using the <code>spades</code> function. By default in an interactive session, a progress bar is displayed in the console (this can be customized), and any specified files are loaded (via including an <code>input</code> <code>data.frame</code> or <code>data.table</code>, see examples). Debugging mode, <em>i.e.</em>, setting <code>spades(mySim, debug = TRUE)</code>, prints the contents of the <code>simList</code> object after the completion of every event during simulation. See the <a href="https://github.com/PredictiveEcology/SpaDES/wiki/Debugging">wiki entry on debugging</a> for more details on debugging SpaDES models.</p>
+<p>Once a simulation is properly initialized it is executed using the <code>spades</code> function. By default in an interactive session, a progress bar is displayed in the console (this can be customized), and any specified files are loaded (via including an <code>input</code> <code>data.frame</code> or <code>data.table</code>, see examples). Debugging mode, <em>i.e.</em>, setting <code>spades(mySim, debug=TRUE)</code>, prints the contents of the <code>simList</code> object after the completion of every event during simulation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">spades.nCompleted =</span> <span class="dv">50</span>)   <span class="co"># default: store 1000 events in the completed event list</span>
 mySim &lt;-<span class="st"> </span><span class="kw">simInit</span>(...)             <span class="co"># initialize a simulation using valid parameters</span>
 mySim &lt;-<span class="st"> </span><span class="kw">spades</span>(mySim)            <span class="co"># run the simulation, returning the completed sim object</span>
@@ -266,7 +266,7 @@ mySim &lt;-<span class="st"> </span><span class="kw">spades</span>(mySim)       
 <p>Running multiple simulations with different parameter values is a critical part of sensitivity and robustness analysis, simulation experiments, optimization, and pattern oriented modelling. Likewise, greater understanding and evaluation of models and their uncertainty requires simulation replication and repetition <span class="citation">(Grimm and Railsback 2005; Thiele and Grimm 2015)</span>. Using <code>R</code> as a common platform for data, simulation, and analyses we can do all of these easily and directly as part of our <code>SpaDES</code> simulation without breaking the linkages between model and analysis. This workflow facilitates and enhances the use of ensemble and consensus modelling, and studies of cumulative effects.</p>
 <div id="running-a-groups-of-simulations-the-experiment-function" class="section level2">
 <h2><span class="header-section-number">5.1</span> Running a groups of simulations: the <code>experiment</code> function</h2>
-<p>Once a simulation is properly initialized and runs correctly with the <code>spades</code> function, it is likely time to do things like run replicates. There is a function, <code>experiment</code> to do this, as well as building parameter and module “simulation experiments”. For example, you can pass alternative values to parameters in modules and the <code>experiment</code> will build a fully factorial experiment, with replication and run them. This function (as with <code>POM</code> and <code>splitRaster</code>) is parallel-aware and can either proceed with a cluster object (<code>cl</code> argument) or a cluster running in the background using the <code>raster::beginCluster</code>.</p>
+<p>Once a simulation is properly initialized and runs correctly with the <code>spades</code> function, it is likely time to do things like run replicates. There is a function, <code>experiment</code> to do this, as well as building parameter and module “simulation experiments”. For example, you can pass alternative values to parameters in modules and the <code>experiment</code> will build a fully factorial experiment, with replication and run them. This function (as with <code>POM</code> and <code>splitRaster</code>) is parallel-aware and can either proceed with a cluster object (<code>cl</code> argument) or a cluster running in the background using the <code>raster::startCluster</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?experiment <span class="co"># will give many more examples than here</span>
 
 <span class="co"># Copy Example 5 here:</span>
@@ -284,8 +284,8 @@ sims &lt;-<span class="st"> </span><span class="kw">experiment</span>(mySim, <sp
 <span class="kw">attr</span>(sims, <span class="st">&quot;experiment&quot;</span>)$expDesign <span class="co"># shows 2 replicates of same experiment</span></code></pre></div>
 </div>
 </div>
-<div id="additional-resources" class="section level1">
-<h1><span class="header-section-number">6</span> Additional resources</h1>
+<div id="additonal-resources" class="section level1">
+<h1><span class="header-section-number">6</span> Additonal resources</h1>
 <div id="spades-documentation-and-vignettes" class="section level2">
 <h2><span class="header-section-number">6.1</span> <code>SpaDES</code> documentation and vignettes</h2>
 <div id="help-files" class="section level3">
@@ -307,7 +307,7 @@ sims &lt;-<span class="st"> </span><span class="kw">experiment</span>(mySim, <sp
 </div>
 <div id="wiki" class="section level3">
 <h3><span class="header-section-number">6.1.4</span> Wiki</h3>
-<p>Additional guides for getting started with <code>SpaDES</code> and debugging are provided at our wiki:</p>
+<p>Additional guides for getting started with <code>SpaDES</code> are provided at our wiki:</p>
 <p><a href="https://github.com/PredictiveEcology/SpaDES/wiki" class="uri">https://github.com/PredictiveEcology/SpaDES/wiki</a></p>
 </div>
 <div id="qa-forum" class="section level3">
@@ -335,10 +335,10 @@ sims &lt;-<span class="st"> </span><span class="kw">experiment</span>(mySim, <sp
 <div id="ref-sp:2013">
 <p>Bivand, Roger S, Edzer J Pebesma, and Virgilio Gomez-Rubio. 2013. <em>Applied spatial data analysis with R</em>. Second edi. NY: Springer. <a href="http://www.asdar-book.org/" class="uri">http://www.asdar-book.org/</a>.</p>
 </div>
-<div id="ref-Eddelbuettel:2013Rcpp">
+<div id="ref-Eddelbuettel:2013rcpp">
 <p>Eddelbuettel, Dirk. 2013. <em>Seamless R and C++ Integration with Rcpp</em>. New York, NY: Springer.</p>
 </div>
-<div id="ref-Eddelbuettel:2011Rcpp">
+<div id="ref-Eddelbuettel:2011rcpp">
 <p>Eddelbuettel, Dirk, and Romain Francois. 2011. “Rcpp : Seamless R and C++ Integration.” <em>Journal Of Statistical Software</em> 40 (8): 1–18. <a href="http://www.jstatsoft.org/v40/i08/" class="uri">http://www.jstatsoft.org/v40/i08/</a>.</p>
 </div>
 <div id="ref-Fall:2001em">
@@ -347,7 +347,7 @@ sims &lt;-<span class="st"> </span><span class="kw">experiment</span>(mySim, <sp
 <div id="ref-Grimm:2005bk">
 <p>Grimm, Volker, and Steven F Railsback. 2005. <em>Individual-based modelling and ecology</em>. Princeton, NJ: Princeton University Press. <a href="http://www.humboldt.edu/ecomodel/documents/Grimm-Railsback05.pdf" class="uri">http://www.humboldt.edu/ecomodel/documents/Grimm-Railsback05.pdf</a>.</p>
 </div>
-<div id="ref-Grimm2005science">
+<div id="ref-Grimm:2005sc">
 <p>Grimm, Volker, Eloy Revilla, Uta Berger, Florian Jeltsch, Wolf M Mooij, Steven F Railsback, Hans-Hermann Thulke, Jacob Weiner, Thorsten Wiegand, and Donald L DeAngelis. 2005. “Pattern-oriented modeling of agent-based complex systems: lessons from ecology.” <em>Science</em> 310 (5750): 987–91. doi:<a href="https://doi.org/10.1126/science.1116681">10.1126/science.1116681</a>.</p>
 </div>
 <div id="ref-raster:2015">
@@ -359,7 +359,7 @@ sims &lt;-<span class="st"> </span><span class="kw">experiment</span>(mySim, <sp
 <div id="ref-Scheller:2007em">
 <p>Scheller, Robert M, James B Domingo, Brian R Sturtevant, Jeremy S Williams, Arnold Rudy, Eric J Gustafson, and David J Mladenoff. 2007. “Design, development, and application of LANDIS-II, a spatial landscape simulation model with flexible temporal and spatial resolution.” <em>Ecological Modelling</em> 201: 409–19. doi:<a href="https://doi.org/10.1016/j.ecolmodel.2006.10.009">10.1016/j.ecolmodel.2006.10.009</a>.</p>
 </div>
-<div id="ref-Thiele2015">
+<div id="ref-Thiele:2015oi">
 <p>Thiele, Jan C, and Volker Grimm. 2015. “Replicating and breaking models: good for you and good for ecology.” <em>Oikos</em>. doi:<a href="https://doi.org/10.1111/oik.02170">10.1111/oik.02170</a>.</p>
 </div>
 <div id="ref-NetLogo">
